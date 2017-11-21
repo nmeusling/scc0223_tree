@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "tree.h"
-#define CHAR_LIMIT 100
+
 
 void input_tree(char *);
 void create_tree(char *, Tree *T);
@@ -21,6 +21,14 @@ int main(){
     printf("\nAltura da arvore: %d", height(T.root));
     printf("\nNumero de nós folhas: %d", num_leaves(T.root));
     printf("\nA arvore esta cheia?: %d", is_full(T.root));
+    printf("\nA arvore e ABB?: %d", is_abb(T.root));
+    printf("\nA arvore e AVL?: %d", is_avl(T.root));
+    printf("\nPreorderd?: %d", preorder(T.root));
+    printf("\nEmorderd?: %d", inorder(T.root));
+    printf("\nPostorderd?: %d", postorder(T.root));
+    //is_ordered(T.root, 0);
+    //preorder(T.root, input, 0);
+    //print_array(input);
 
 
 

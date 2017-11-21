@@ -312,3 +312,106 @@ int is_full(node * p){
     else
         return 0;
 }
+
+int is_abb(node *p){
+    int result;
+    if(p == NULL)
+        return 1;
+    else if(p->left == NULL && p->right == NULL)
+        return 1;
+    else if(p->left == NULL)
+        result = (p->right->info > p->info) && is_abb(p->left) && is_abb(p->right);
+    else if(p->right == NULL)
+        result = (p->left->info < p->info) && is_abb(p->left) && is_abb(p->right);
+    else
+        result = (p->left->info < p->info) && (p->right->info > p->info) && is_abb(p->left) && is_abb(p->right);
+
+    return result;
+}
+
+int is_avl(node *p){
+    return (is_abb(p) && is_avl_aux(p));
+}
+
+int is_avl_aux(node *p){
+    int height_difference;
+    if(p == NULL)
+        return 1;
+
+    height_difference = height(p->right) - height(p->left);
+    if(height_difference < -1 || height_difference > 1)
+        return 0;
+    else
+        return (is_avl(p->left) && is_avl(p->right));
+
+}
+
+int preorder(node * p){
+    int result;
+    elem * prev = (elem *)malloc(sizeof(elem));
+    *prev = p->info;
+    result = preorder_aux(p, prev);
+    free (prev);
+    return result;
+}
+
+int preorder_aux (node * p, elem * prev){
+    if(p == NULL)
+        return 1;
+    if(*prev > p->info)
+        return 0;
+    else {
+        *prev = p->info;
+        return preorder_aux(p->left, prev) && preorder_aux(p->right, prev);
+    }
+}
+
+int inorder(node * p){
+    int result;
+    elem * prev = (elem *)malloc(sizeof(elem));
+    *prev = p->info;
+    result = inorder_aux(p, prev);
+    free (prev);
+    return result;
+}
+//todo more tests
+int inorder_aux (node * p, elem * prev){
+
+    if(p == NULL)
+        return 1;
+    //*prev = p->info;
+
+    if(!inorder_aux(p->left, prev))
+        return 0;
+    if(*prev > p->info)
+        return 0;
+    *prev = p->info;
+    if(!inorder_aux(p->right, prev))
+        return 0;
+    else
+        return 1;
+}
+
+int postorder(node * p){
+    int result;
+    elem * prev = (elem *)malloc(sizeof(elem));
+    *prev = p->info;
+    result = postorder_aux(p, prev);
+    free (prev);
+    return result;
+}
+//todo more tests
+int postorder_aux (node * p, elem * prev){
+    if(p == NULL)
+        return 1;
+
+    *prev = p->info;
+    if (!postorder_aux(p->left, prev))
+        return 0;
+    else if(!postorder_aux(p->right, prev))
+        return 0;
+    else if(*prev > p->info)
+        return 0;
+    else
+        return 1;
+}

@@ -6,6 +6,7 @@
 #define SCC0223_TREE_TREE_H
 
 typedef char elem;
+#define CHAR_LIMIT 100
 
 typedef struct block {
     elem info;
@@ -34,5 +35,14 @@ int espelho_similares(node*,node*);
 int insert_width(Tree *T, elem *x, int);
 int num_leaves(node * p);
 int is_full(node *p);
+int is_abb(node *p);
+int is_avl(node *p);
+int is_avl_aux(node *p);
+int preorder (node * p);
+int preorder_aux (node * p, elem * prev);
+int inorder (node * p);
+int inorder_aux (node * p, elem * prev);
+int postorder(node * p);
+int postorder_aux (node * p, elem * prev);
 
 #endif //SCC0223_TREE_TREE_H
