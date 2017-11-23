@@ -368,10 +368,11 @@ int preorder_aux (node * p, elem * prev){
 
 int inorder(node * p){
     int result;
-    elem * prev = (elem *)malloc(sizeof(elem));
-    *prev = p->info;
-    result = inorder_aux(p, prev);
-    free (prev);
+    elem prev;
+    //elem * prev = (elem *)malloc(sizeof(elem));
+    prev = 0;
+    result = inorder_aux(p, &prev);
+    //free (prev);
     return result;
 }
 //todo more tests
