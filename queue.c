@@ -1,6 +1,10 @@
-//
-// Created by nmeusling on 19/11/17.
-//
+/*
+ * Natalie Menato
+ * Numero USP: 10295051
+ * 26/11/2017
+ * Submissao para SCC0223 Trabalho 2 - parte 2
+ *
+ */
 
 #include "queue.h"
 
