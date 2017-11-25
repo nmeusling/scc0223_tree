@@ -44,15 +44,15 @@ int main(){
     printf("\n----------------------------------------------");
     printf("\nArvore AVL: \n");
     print_avl(&tree_avl.root);
-    printf("\nAltura da arvore: %d", height(tree_avl.root));
-    printf("\nNumero de nós folhas: %d", num_leaves(tree_avl.root));
+    printf("\nAltura da arvore: %d", height_avl(tree_avl.root));
+    printf("\nNumero de nós folhas: %d", num_leaves_avl(tree_avl.root));
     printf("\n0 - Nao, 1 - Sim");
-    printf("\nA arvore esta cheia?: %d", is_full(tree_avl.root));
-    printf("\nA arvore e ABB?: %d", is_abb(tree_avl.root));
-    printf("\nA arvore e AVL?: %d", is_avl(tree_avl.root));
-    printf("\nOrdenada em Pre-order?: %d", preorder(tree_avl.root));
-    printf("\nOrdenada em Ordem?: %d", inorder(tree_avl.root));
-    printf("\nOrdenada em Pos-order?: %d", postorder(tree_avl.root));
+    printf("\nA arvore esta cheia?: %d", is_full_avl(tree_avl.root));
+    printf("\nA arvore e ABB?: %d", is_abb_avl(tree_avl.root));
+    printf("\nA arvore e AVL?: %d", is_avl_avl(tree_avl.root));
+    printf("\nOrdenada em Pre-order?: %d", preorder_avl(tree_avl.root));
+    printf("\nOrdenada em Ordem?: %d", inorder_avl(tree_avl.root));
+    printf("\nOrdenada em Pos-order?: %d", postorder_avl(tree_avl.root));
 
 }
 

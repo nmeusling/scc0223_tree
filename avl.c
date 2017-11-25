@@ -180,3 +180,159 @@ int insert_avl(node_avl **p, elem *x) {
     int cresceu;
     return insert_avl_aux(p, x, &cresceu);
 }
+
+
+//função para computar a altura de uma árvore binária onde o node p é a raiz
+int height_avl(node_avl *p) {
+    int h_left, h_right;
+
+    if (p == NULL)
+        return (0);
+    else {
+        h_left  = 1 + height_avl(p->left);
+        h_right = 1 + height_avl(p->right);
+        if (h_left > h_right)
+            return (h_left);
+        else return (h_right);
+    }
+}
+
+//conta o numbero de nos folhas na arvore
+int num_leaves_avl(node_avl * p){
+    if(p->left == NULL && p->right == NULL)
+        return 1;
+    else if(p->left == NULL)
+        return num_leaves_avl(p->right);
+    else if(p->right == NULL)
+        return num_leaves_avl(p->left);
+    else
+        return num_leaves_avl(p->left) + num_leaves_avl(p->right);
+
+}
+
+//verifica se a arvore e cheia
+int is_full_avl(node_avl * p){
+    int h, i, max_leaves = 1;
+    h = height_avl(p);
+    for(i = 1; i< h; i++){
+        max_leaves = max_leaves*2;
+    }
+
+    if(num_leaves_avl(p) == max_leaves)
+        return 1;
+    else
+        return 0;
+}
+
+//verifica se uma arvore e abb
+int is_abb_avl(node_avl *p){
+    int result;
+    if(p == NULL)
+        return 1;
+    else if(p->left == NULL && p->right == NULL)
+        return 1;
+    else if(p->left == NULL)
+        result = (p->right->info > p->info) && is_abb_avl(p->left) && is_abb_avl(p->right);
+    else if(p->right == NULL)
+        result = (p->left->info < p->info) && is_abb_avl(p->left) && is_abb_avl(p->right);
+    else
+        result = (p->left->info < p->info) && (p->right->info > p->info) && is_abb_avl(p->left) && is_abb_avl(p->right);
+
+    return result;
+}
+
+//verifica se altura das subarvores direita e esquerda de todas as subarvores
+int is_avl_aux(node_avl *p){
+    int height_difference;
+    if(p == NULL)
+        return 1;
+
+    height_difference = height_avl(p->right) - height_avl(p->left);
+    if(height_difference < -1 || height_difference > 1)
+        return 0;
+    else
+        return (is_avl_avl(p->left) && is_avl_avl(p->right));
+
+}
+
+//verifica se uma arvore e avl
+int is_avl_avl(node_avl *p){
+    if(!is_abb_avl(p))
+        return 0;
+    else
+        return is_avl_aux(p);
+}
+
+
+//verifica se os elementos da arvore estao ordenada com precurso pre-order
+int preorder_aux_avl (node_avl * p, elem * prev){
+    if(p == NULL)
+        return 1;
+    if(*prev > p->info)
+        return 0;
+    else {
+        *prev = p->info;
+        return preorder_aux_avl(p->left, prev) && preorder_aux_avl(p->right, prev);
+    }
+}
+
+//chama a funcao para verifcar se a arvore fica ordenado com precurso pre-order
+int preorder_avl(node_avl * p){
+    int result;
+    elem * prev = (elem *)malloc(sizeof(elem));
+    *prev = p->info;
+    result = preorder_aux_avl(p, prev);
+    free (prev);
+    return result;
+}
+
+//verifica se os elementos da arvore estao ordenada com precurso em ordem
+int inorder_aux_avl (node_avl * p, elem * prev){
+
+    if(p == NULL)
+        return 1;
+    //*prev = p->info;
+
+    if(!inorder_aux_avl(p->left, prev))
+        return 0;
+    if(*prev > p->info)
+        return 0;
+    *prev = p->info;
+    if(!inorder_aux_avl(p->right, prev))
+        return 0;
+    else
+        return 1;
+}
+
+//chama a funcao para verifcar se a arvore fica ordenado com precurso em ordem
+int inorder_avl(node_avl * p){
+    int result;
+    elem prev = 0;
+    result = inorder_aux_avl(p, &prev);
+    return result;
+}
+
+//verifica se os elementos da arvore estao ordenada com precurso pos-order
+int postorder_aux_avl (node_avl * p, elem * prev){
+    if(p == NULL)
+        return 1;
+
+    *prev = p->info;
+    if (!postorder_aux_avl(p->left, prev))
+        return 0;
+    else if(!postorder_aux_avl(p->right, prev))
+        return 0;
+    else if(*prev > p->info)
+        return 0;
+    else
+        return 1;
+}
+
+//chama a funcao para verifcar se a arvore fica ordenado com precurso pos-order
+int postorder_avl(node_avl * p){
+    int result ;
+    elem prev = 0;
+    result = postorder_aux_avl(p, &prev);
+    return result;
+}
+

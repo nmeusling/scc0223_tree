@@ -96,6 +96,7 @@ int insert_width(Tree *T, elem *x, int preceding_blanks) {
     }
     //libera memoria da fila
     destroy_queue(&Q);
+    return 1;
 }
 
 
@@ -109,6 +110,15 @@ void print_tree(node *p) {
         print_tree(p->right);
         printf(")");
     } else printf("null");
+}
+
+//libera toda a memória usada na árvore
+void destroy_tree(node *p) {
+    if (p != NULL) {
+        destroy_tree(p->left);
+        destroy_tree(p->right);
+        free(p);
+    }
 }
 
 //função para computar a altura de uma árvore binária onde o node p é a raiz
@@ -125,16 +135,6 @@ int height(node *p) {
         else return (h_right);
     }
 }
-
-//libera toda a memória usada na árvore
-void destroy_tree(node *p) {
-    if (p != NULL) {
-        destroy_tree(p->left);
-        destroy_tree(p->right);
-        free(p);
-    }
-}
-
 
 //conta o numbero de nos folhas na arvore
 int num_leaves(node * p){

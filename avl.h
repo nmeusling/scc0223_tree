@@ -38,5 +38,27 @@ void print_avl(node_avl**);
 //chama as funcoes para inserir na arovor avl
 int insert_avl(node_avl**,elem*);
 
+//função para computar a altura de uma árvore binária onde o node p é a raiz
+int height_avl(node_avl *p);
 
+//conta o numbero de nos folhas na arvore
+int num_leaves_avl(node_avl * p);
+
+//verifica se a arvore e cheia
+int is_full_avl(node_avl * p);
+
+//verifica se uma arvore e abb
+int is_abb_avl(node_avl *p);
+
+//verifica se uma arvore e avl
+int is_avl_avl(node_avl *p);
+
+//chama a funcao para verifcar se a arvore fica ordenado com precurso pre-order
+int preorder_avl(node_avl * p);
+
+//chama a funcao para verifcar se a arvore fica ordenado com precurso em ordem
+int inorder_avl(node_avl * p);
+
+//chama a funcao para verifcar se a arvore fica ordenado com precurso pos-order
+int postorder_avl(node_avl * p);
 #endif //SCC0223_TREE_AVL_H
