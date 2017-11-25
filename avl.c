@@ -242,7 +242,7 @@ int is_abb_avl(node_avl *p){
 }
 
 //verifica se altura das subarvores direita e esquerda de todas as subarvores
-int is_avl_aux(node_avl *p){
+int is_avl_aux_avl(node_avl *p){
     int height_difference;
     if(p == NULL)
         return 1;
@@ -260,7 +260,7 @@ int is_avl_avl(node_avl *p){
     if(!is_abb_avl(p))
         return 0;
     else
-        return is_avl_aux(p);
+        return is_avl_aux_avl(p);
 }
 
 

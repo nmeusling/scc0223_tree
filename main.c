@@ -17,7 +17,6 @@ void create_tree_avl(char * str, avl *a);
 
 int main(){
     char input[CHAR_LIMIT +1];
-    int full;
     Tree T;
     avl tree_avl;
 
@@ -52,7 +51,7 @@ int main(){
     printf("\nA arvore e AVL?: %d", is_avl_avl(tree_avl.root));
     printf("\nOrdenada em Pre-order?: %d", preorder_avl(tree_avl.root));
     printf("\nOrdenada em Ordem?: %d", inorder_avl(tree_avl.root));
-    printf("\nOrdenada em Pos-order?: %d", postorder_avl(tree_avl.root));
+    printf("\nOrdenada em Pos-order?: %d\n", postorder_avl(tree_avl.root));
 
 }
 
