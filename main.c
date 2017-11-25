@@ -18,8 +18,8 @@ void create_tree_avl(char * str, avl *a);
 int main(){
     char input[CHAR_LIMIT +1];
     int full;
-    avl tree_avl;
     Tree T;
+    avl tree_avl;
 
     input_tree(input);
 
@@ -68,7 +68,7 @@ void input_tree(char * input){
     }
 }
 
-//Funcao para criar a arvore dado o input string
+//Funcao para inserir os nos representados no input string
 void create_tree(char * str, Tree *T){
     int i, length = strlen(str), spaces = 0;
     for(i=0; i<length;i++){
@@ -86,7 +86,7 @@ void create_tree(char * str, Tree *T){
 
 }
 
-//Funcao para criar a arvore avl dado o input string
+//Funcao para inserir os nos representados no input string
 void create_tree_avl(char * str, avl *a){
     int i, length = strlen(str);
     for(i=0; i<length;i++){

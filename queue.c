@@ -8,19 +8,19 @@
 
 #include "queue.h"
 
-
+//no para fila, cada elemento e um pointeiro
 struct queue_block {
     void *info;
     struct queue_block *next;
 };
 
-
+//inicializa a fila
 void create_queue(Queue *Q) {
     Q->first=NULL;
     Q->last=NULL;
 }
 
-
+//insere na fila, insere no fim
 int insert_queue(Queue *Q, void *x) {
     queue_node *p;
 
@@ -38,7 +38,7 @@ int insert_queue(Queue *Q, void *x) {
     }
 }
 
-
+//removo o ultimo no da fila, retorna o valor removido
 void * remove_queue(Queue *Q) {
     queue_node *p;
     void * x;
@@ -55,12 +55,14 @@ void * remove_queue(Queue *Q) {
     }
 }
 
+//remove todos os elementas da fila, liberando a memoria
 void destroy_queue(Queue *Q){
     while(!is_empty(Q)){
         remove_queue(Q);
     }
 }
 
+//verifica se a fila esta vazia
 int is_empty(Queue *Q) {
     if (Q->first==NULL)
         return(1);

@@ -23,150 +23,82 @@ int IsEmpty(Tree *T) {
     else return 0;
 }
 
-//busca x na árvore, devendo iniciar com p=raiz ou outro ponto da árvore
-node *busca(node *p, elem *x) {
-    node *aux;
 
-    if (p == NULL)
-        return (NULL);
-    else if (p->info == *x)
-        return (p);
-    else {
-        aux = busca(p->left, x);
-        if (aux == NULL)
-            aux = busca(p->right, x);
-        return (aux);
-    }
-}
-
-//busca pai de x na árvore, devendo iniciar com p=raiz ou outro ponto da árvore
-node *busca_pai(node *p, elem *x) {
-    node *aux;
-
-    if (p == NULL)
-        return (NULL);
-    else if ((p->left != NULL) && (p->left->info == *x))
-        return (p);
-    else if ((p->right != NULL) && (p->right->info == *x))
-        return (p);
-    else {
-        aux = busca_pai(p->left, x);
-        if (aux == NULL)
-            aux = busca_pai(p->right, x);
-        return (aux);
-    }
-}
-
+//insere um elemento em largura com um dado numero de nos anteriores vazios, retorna 0 se nao foi possivel inserir
 int insert_width(Tree *T, elem *x, int preceding_blanks) {
-    int skipped = 0;
-    int total_skipped = 0;
+    //conta quantos nos vazios ja tem sido inserido na arvore
+    int skipped = 0; //nos vazios consecutivos
+    int total_skipped = 0; //total vazio na arvore
     Queue Q;
     node *removed;
     create_queue(&Q);
+    //cria o novo no
     node *p = (node *) malloc(sizeof(node));
     if (p == NULL)
         return 0;
     p->info = *x;
     p->left = NULL;
     p->right = NULL;
-    //tree is empty
+    //arvore e vazia
     if (T->root == NULL) {
         T->root = p;
         return 0;
     }
+    //usa fila para adicionar os elementos em largura
     insert_queue(&Q, T->root);
     while (!is_empty(&Q)) {
         removed = remove_queue(&Q);
+        //se tem um no nulo na fila
         if(removed == NULL){
+            //numero de nos vazio na proxima nivel da arvore e 2
             total_skipped +=2;
             skipped += 2;
+            //insere os dos nos nulos na fila
             insert_queue(&Q, NULL);
             insert_queue(&Q, NULL);
         }
         else {
             if (removed->left == NULL) {
+                //se tem o numero correto de nos vazios antes do novo no, insere p
                 if (preceding_blanks == skipped && T->skipped + preceding_blanks== total_skipped) {
                     removed->left = p;
                     T->skipped += preceding_blanks;
                     return 0;
                 } else {
+                    //deixa o no nulo, incrementa o numero de nos vazios
                     insert_queue(&Q, NULL);
                     skipped ++;
                     total_skipped ++;
                 }
             } else if (removed->left != NULL) {
+                //insere o no na fila
                 skipped = 0;
                 insert_queue(&Q, removed->left);
             }
             if (removed->right == NULL) {
+                //se tem o numero correto de nos vazios antes do novo no, insere p
                 if (preceding_blanks == skipped && T->skipped + preceding_blanks== total_skipped) {
                     removed->right = p;
                     T->skipped +=preceding_blanks;
                     return 0;
                 } else {
+                    //deixa o no nulo, incrementa o numero de nos vazios
                     insert_queue(&Q, NULL);
                     skipped ++;
                     total_skipped ++;
                 }
             } else if (removed->right != NULL) {
+                //insere o no na fila
                 skipped = 0;
                 insert_queue(&Q, removed->right);
             }
         }
     }
-
+    //libera memoria da fila
     destroy_queue(&Q);
 }
 
-//se possível, insere x à esquerda de pai na árvore
-//se pai=-1, insere na raiz
-void inserir_esq(Tree *T, elem *x, elem *pai, int *erro) {
-    node *aux, *p;
 
-    if (*pai != -1) {
-        aux = busca(T->root, pai);
-        if ((aux != NULL) && (aux->left == NULL)) {
-            p = (node *) malloc(sizeof(node));
-            p->info = *x;
-            p->left = NULL;
-            p->right = NULL;
-            aux->left = p;
-            *erro = 0;
-        } else *erro = 1;
-    } else if (T->root == NULL) {
-        p = (node *) malloc(sizeof(node));
-        p->info = *x;
-        p->left = NULL;
-        p->right = NULL;
-        T->root = p;
-        *erro = 0;
-    } else *erro = 1;
-}
-
-//se possível, insere x à direita de pai na árvore
-//se pai=-1, insere na raiz
-void inserir_dir(Tree *T, elem *x, elem *father, int *erro) {
-    node *aux, *p;
-
-    if (*father != -1) {
-        aux = busca(T->root, father);
-        if ((aux != NULL) && (aux->left == NULL)) {
-            p = (node *) malloc(sizeof(node));
-            p->info = *x;
-            p->left = NULL;
-            p->right = NULL;
-            aux->right = p;
-            *erro = 0;
-        } else *erro = 1;
-    } else if (T->root == NULL) {
-        p = (node *) malloc(sizeof(node));
-        p->info = *x;
-        p->left = NULL;
-        p->right = NULL;
-        T->root = p;
-        *erro = 0;
-    } else *erro = 1;
-}
 
 //imprime os elementos da árvore
 void print_tree(node *p) {
@@ -179,8 +111,7 @@ void print_tree(node *p) {
     } else printf("null");
 }
 
-//função para computar a altura de uma árvore binária; devo começar com p
-//apontando para a raiz
+//função para computar a altura de uma árvore binária onde o node p é a raiz
 int height(node *p) {
     int h_left, h_right;
 
@@ -196,102 +127,16 @@ int height(node *p) {
 }
 
 //libera toda a memória usada na árvore
-void finaliza(node *p) {
+void destroy_tree(node *p) {
     if (p != NULL) {
-        finaliza(p->left);
-        finaliza(p->right);
+        destroy_tree(p->left);
+        destroy_tree(p->right);
         free(p);
     }
 }
 
-//função que remove um elemento da árvore, caso ele esteja nela
-void remover(Tree *T, elem *x, int *erro) {
-    node *filho, *pai;
-    int eh_filho_esq;
 
-    //localizando o nó e o pai dele
-    if ((T->root != NULL) && (T->root->info == *x)) {
-        pai = NULL;
-        filho = T->root;
-    } else {
-        pai = busca_pai(T->root, x);
-        if (pai != NULL) {
-            if ((pai->left != NULL) && (pai->left->info == *x)) {
-                filho = pai->left;
-                eh_filho_esq = 1;
-            } else {
-                filho = pai->right;
-                eh_filho_esq = 0;
-            }
-        } else filho = NULL;
-    }
-
-    if (filho == NULL)
-        *erro = 1;
-    else {
-        //primeiro caso: o nó não tem filhos
-        if ((filho->left == NULL) && (filho->right == NULL)) {
-            if (pai != NULL) {
-                if (eh_filho_esq)
-                    pai->left = NULL;
-                else pai->right = NULL;
-            } else T->root = NULL;
-            free(filho);
-            *erro = 0;
-        }
-            //segundo caso: o nó tem um ou dois filhos
-        else {
-            if (filho->left != NULL) {
-                filho->info = filho->left->info;
-                filho->left->info = *x;
-            } else {
-                filho->info = filho->right->info;
-                filho->right->info = *x;
-            }
-            remover(T, x, erro);
-        }
-    }
-}
-
-//função de percurso de pre-ordem na árvore = busca em profundidade
-void percurso_pre_ordem(node *p) {
-    if (p != NULL) {
-        printf("%d\n", p->info);
-        percurso_pre_ordem(p->left);
-        percurso_pre_ordem(p->right);
-    }
-}
-
-//função de percurso de em-ordem na árvore
-void percurso_em_ordem(node *p) {
-    if (p != NULL) {
-        percurso_em_ordem(p->left);
-        printf("%d\n", p->info);
-        percurso_em_ordem(p->right);
-    }
-}
-
-//função de percurso de pos-ordem na árvore
-void percurso_pos_ordem(node *p) {
-    if (p != NULL) {
-        percurso_pos_ordem(p->left);
-        percurso_pos_ordem(p->right);
-        printf("%d\n", p->info);
-    }
-}
-
-//função que verifica se duas árvores são espelho-similares
-int espelho_similares(node *p1, node *p2) {
-    if ((p1 == NULL) && (p2 == NULL))
-        return (1);
-    else if ((p1 == NULL) || (p2 == NULL))
-        return (0);
-    else if ((espelho_similares(p1->left, p2->right)) && (espelho_similares(p1->right, p2->left)))
-        return (1);
-    else return (0);
-}
-
-
+//conta o numbero de nos folhas na arvore
 int num_leaves(node * p){
     if(p->left == NULL && p->right == NULL)
         return 1;
@@ -304,6 +149,7 @@ int num_leaves(node * p){
 
 }
 
+//verifica se a arvore e cheia
 int is_full(node * p){
     int h, i, max_leaves = 1;
     h = height(p);
@@ -317,6 +163,7 @@ int is_full(node * p){
         return 0;
 }
 
+//verifica se uma arvore e abb
 int is_abb(node *p){
     int result;
     if(p == NULL)
@@ -333,10 +180,15 @@ int is_abb(node *p){
     return result;
 }
 
+//verifica se uma arvore e avl
 int is_avl(node *p){
-    return (is_abb(p) && is_avl_aux(p));
+    if(!is_abb(p))
+        return 0;
+    else
+        return is_avl_aux(p);
 }
 
+//verifica se altura das subarvores direita e esquerda de todas as subarvores
 int is_avl_aux(node *p){
     int height_difference;
     if(p == NULL)
@@ -350,6 +202,7 @@ int is_avl_aux(node *p){
 
 }
 
+//chama a funcao para verifcar se a arvore fica ordenado com precurso pre-order
 int preorder(node * p){
     int result;
     elem * prev = (elem *)malloc(sizeof(elem));
@@ -359,6 +212,7 @@ int preorder(node * p){
     return result;
 }
 
+//verifica se os elementos da arvore estao ordenada com precurso pre-order
 int preorder_aux (node * p, elem * prev){
     if(p == NULL)
         return 1;
@@ -370,16 +224,15 @@ int preorder_aux (node * p, elem * prev){
     }
 }
 
+//chama a funcao para verifcar se a arvore fica ordenado com precurso em ordem
 int inorder(node * p){
     int result;
-    elem prev;
-    //elem * prev = (elem *)malloc(sizeof(elem));
-    prev = 0;
+    elem prev = 0;
     result = inorder_aux(p, &prev);
-    //free (prev);
     return result;
 }
-//todo more tests
+
+//verifica se os elementos da arvore estao ordenada com precurso em ordem
 int inorder_aux (node * p, elem * prev){
 
     if(p == NULL)
@@ -397,15 +250,15 @@ int inorder_aux (node * p, elem * prev){
         return 1;
 }
 
+//chama a funcao para verifcar se a arvore fica ordenado com precurso pos-order
 int postorder(node * p){
-    int result;
-    elem * prev = (elem *)malloc(sizeof(elem));
-    *prev = p->info;
-    result = postorder_aux(p, prev);
-    free (prev);
+    int result ;
+    elem prev = 0;
+    result = postorder_aux(p, &prev);
     return result;
 }
-//todo more tests
+
+//verifica se os elementos da arvore estao ordenada com precurso pos-order
 int postorder_aux (node * p, elem * prev){
     if(p == NULL)
         return 1;

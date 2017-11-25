@@ -7,7 +7,6 @@
  */
 
 #include "avl.h"
-
 #include <stdio.h>
 
 
@@ -37,19 +36,7 @@ void print_avl(node_avl **p) {
     else printf("=");
 }
 
-//função de busca de um elemento na AVL; deve começar com p=raiz
-int buscar(node_avl **p, int *x) {
-    if (*p==NULL)
-        return 0;
-    else if (*x<(*p)->info)
-        return(buscar(&(*p)->left,x));
-    else if (*x>(*p)->info)
-        return(buscar(&(*p)->right,x));
-    else return 1;
-}
-
-//funções para inserção de um elemento na AVL
-//a variável "cresceu" indica se a árvore cresceu após a inserção
+//fazer rotacao esquerda-esquerda
 void EE(node_avl **r) {
     node_avl *pai=*r;
     node_avl *filho=pai->left;
@@ -60,6 +47,7 @@ void EE(node_avl **r) {
     *r=filho;
 }
 
+//fazer rotacao direita-direita
 void DD(node_avl **r) {
     node_avl *pai=*r;
     node_avl *filho=pai->right;
@@ -70,6 +58,7 @@ void DD(node_avl **r) {
     *r=filho;
 }
 
+//fazer rotacao esquerda-direita
 void ED(node_avl **r) {
     node_avl *pai=*r;
     node_avl *filho=pai->left;
@@ -96,6 +85,7 @@ void ED(node_avl **r) {
     *r=neto;
 }
 
+//fazer rotacao direita-esquerda
 void DE(node_avl **r) {
     node_avl *pai=*r;
     node_avl *filho=pai->right;
@@ -122,6 +112,7 @@ void DE(node_avl **r) {
     *r=neto;
 }
 
+//insere um novo elemento no avl, fazendo rotacao se necessario
 int insert_avl_aux(node_avl **p, elem *x, int *grew) {
     if (*p==NULL) {
         *p=(node_avl*) malloc(sizeof(node_avl));
@@ -184,6 +175,7 @@ int insert_avl_aux(node_avl **p, elem *x, int *grew) {
     }
 }
 
+//chama as funcoes para inserir na arovor avl
 int insert_avl(node_avl **p, elem *x) {
     int cresceu;
     return insert_avl_aux(p, x, &cresceu);
