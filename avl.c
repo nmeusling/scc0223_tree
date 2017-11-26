@@ -38,7 +38,7 @@ void print_avl(node_avl **p) {
         printf(",");
         print_avl(&(*p)->right);
         printf(")");
-    } else printf("=");
+    } else printf("null");
 }
 
 /*

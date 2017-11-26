@@ -6,8 +6,6 @@
  *
  */
 
-#ifndef SCC0223_TREE_TREE_H
-#define SCC0223_TREE_TREE_H
 
 typedef char elem;
 #define CHAR_LIMIT 100
@@ -75,4 +73,3 @@ int postorder(node *p);
 //verifica se os elementos da arvore estao ordenada com precurso pos-order
 int postorder_aux(node *p, elem *prev);
 
-#endif //SCC0223_TREE_TREE_H

@@ -6,8 +6,6 @@
  *
  */
 
-#ifndef SCC0223_TREE_AVL_H
-#define SCC0223_TREE_AVL_H
 
 #include <stdlib.h>
 
@@ -62,4 +60,3 @@ int inorder_avl(node_avl *p);
 //chama a funcao para verifcar se a arvore fica ordenado com precurso pos-order
 int postorder_avl(node_avl *p);
 
-#endif //SCC0223_TREE_AVL_H

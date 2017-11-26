@@ -6,8 +6,6 @@
  *
  */
 
-#ifndef SCC0223_TREE_QUEUE_H
-#define SCC0223_TREE_QUEUE_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,4 +33,3 @@ int is_empty(Queue *);
 //exclui todos os elementos da fila, liberando a memoria
 void destroy_queue(Queue *Q);
 
-#endif //SCC0223_TREE_QUEUE_H
