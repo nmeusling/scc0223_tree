@@ -12,11 +12,13 @@
 
 
 void input_tree(char *);
-void create_tree(char *, Tree *T);
-void create_tree_avl(char * str, avl *a);
 
-int main(){
-    char input[CHAR_LIMIT +1];
+void create_tree(char *, Tree *T);
+
+void create_tree_avl(char *str, avl *a);
+
+int main() {
+    char input[CHAR_LIMIT + 1];
     Tree T;
     avl tree_avl;
 
@@ -55,29 +57,32 @@ int main(){
 
 }
 
-//Pede para o usuario inserir o chars representando a arvore
-void input_tree(char * input){
+/*
+ * Pede para o usuario inserir o chars representando a arvore
+ */
+void input_tree(char *input) {
     int length;
     printf("Insere ate %d caraters: ", CHAR_LIMIT);
-    fgets(input, CHAR_LIMIT+1, stdin);
-    length = strlen(input);
+    fgets(input, CHAR_LIMIT + 1, stdin);
+    length = (int) strlen(input);
     //se o enter foi considerado no string, tira e coloca null
-    if(input[length-1] == 10){
-        input[length-1] = 0;
+    if (input[length - 1] == 10) {
+        input[length - 1] = 0;
     }
 }
 
-//Funcao para inserir os nos representados no input string
-void create_tree(char * str, Tree *T){
-    int i, length = strlen(str), spaces = 0;
-    for(i=0; i<length;i++){
+/*
+ * Funcao para inserir os nos representados no input string
+ */
+void create_tree(char *str, Tree *T) {
+    int i, length = (int) strlen(str), spaces = 0;
+    for (i = 0; i < length; i++) {
         //se o char e um espaco
-        if(str[i] == 32){
-            spaces ++;
-        }
-        else{
+        if (str[i] == 32) {
+            spaces++;
+        } else {
             //insere o elemento, especificando quantos nos vazios (spaces) devem ir antes do no desejado
-            insert_width(T, &(str[i]),spaces);
+            insert_width(T, &(str[i]), spaces);
             spaces = 0;
         }
     }
@@ -85,11 +90,13 @@ void create_tree(char * str, Tree *T){
 
 }
 
-//Funcao para inserir os nos representados no input string
-void create_tree_avl(char * str, avl *a){
-    int i, length = strlen(str);
-    for(i=0; i<length;i++){
-        if(str[i] != 32){
+/*
+ * Funcao para inserir os nos representados no input string
+ */
+void create_tree_avl(char *str, avl *a) {
+    int i, length = (int) strlen(str);
+    for (i = 0; i < length; i++) {
+        if (str[i] != 32) {
             insert_avl(&a->root, &str[i]);
         }
     }

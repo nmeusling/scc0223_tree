@@ -21,16 +21,16 @@ typedef struct {
 } Queue;
 
 //cria e incicializa a fila
-void create_queue(Queue*);
+void create_queue(Queue *);
 
 //inserir um elemento no fim da fila
-int insert_queue(Queue*,void *);
+int insert_queue(Queue *, void *);
 
 //remove o primeiro elemento da fila
-void * remove_queue(Queue*);
+void *remove_queue(Queue *);
 
 //verifica se a fila esta vazia
-int is_empty(Queue*);
+int is_empty(Queue *);
 
 //exclui todos os elementos da fila, liberando a memoria
 void destroy_queue(Queue *Q);

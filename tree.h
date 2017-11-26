@@ -16,7 +16,7 @@ typedef char elem;
 typedef struct block {
     elem info;
     struct block *left, *right;
-}node;
+} node;
 
 //arvore
 typedef struct {
@@ -25,25 +25,25 @@ typedef struct {
 } Tree;
 
 //inicializa a árvore, fazendo a raiz igual a NULL
-void create(Tree*);
+void create(Tree *);
 
 //verifica se a árvore está vazia
-int isEmpty(Tree*);
+int isEmpty(Tree *);
 
 //insere um elemento em largura com um dado numero de nos anteriores vazios, retorna 0 se nao foi possivel inserir
 int insert_width(Tree *T, elem *x, int);
 
 //imprime os elementos da árvore
-void print_tree(node*);
+void print_tree(node *);
 
 //função para computar a altura de uma árvore binária onde o node p é a raiz
-int height(node*);
+int height(node *);
 
 //libera toda a memória usada na árvore
-void destroy_tree(node*);
+void destroy_tree(node *);
 
 //conta o numbero de nos folhas na arvore
-int num_leaves(node * p);
+int num_leaves(node *p);
 
 //verifica se a arvore e cheia
 int is_full(node *p);
@@ -58,21 +58,21 @@ int is_avl(node *p);
 int is_avl_aux(node *p);
 
 //chama a funcao para verifcar se a arvore fica ordenado com precurso pre-order
-int preorder (node * p);
+int preorder(node *p);
 
 //verifica se os elementos da arvore estao ordenada com precurso pre-order
-int preorder_aux (node * p, elem * prev);
+int preorder_aux(node *p, elem *prev);
 
 //chama a funcao para verifcar se a arvore fica ordenado com precurso em ordem
-int inorder (node * p);
+int inorder(node *p);
 
 //verifica se os elementos da arvore estao ordenada com precurso em ordem
-int inorder_aux (node * p, elem * prev);
+int inorder_aux(node *p, elem *prev);
 
 //chama a funcao para verifcar se a arvore fica ordenado com precurso pos-order
-int postorder(node * p);
+int postorder(node *p);
 
 //verifica se os elementos da arvore estao ordenada com precurso pos-order
-int postorder_aux (node * p, elem * prev);
+int postorder_aux(node *p, elem *prev);
 
 #endif //SCC0223_TREE_TREE_H
