@@ -17,8 +17,11 @@ void create_tree(char *, Tree *T);
 
 void create_tree_avl(char *str, avl *a);
 
+void print_result(int resultado);
+
 int main() {
     char input[CHAR_LIMIT + 1];
+    int resultado;
     Tree T;
     avl tree_avl;
 
@@ -29,14 +32,25 @@ int main() {
     printf("\nArvore: \n");
     print_tree(T.root);
     printf("\nAltura da arvore: %d", height(T.root));
-    printf("\nNumero de nós folhas: %d", num_leaves(T.root));
-    printf("\n0 - Nao, 1 - Sim");
-    printf("\nA arvore esta cheia?: %d", is_full(T.root));
-    printf("\nA arvore e ABB?: %d", is_abb(T.root));
-    printf("\nA arvore e AVL?: %d", is_avl(T.root));
-    printf("\nOrdenada em Pre-order?: %d", preorder(T.root));
-    printf("\nOrdenada em ordem?: %d", inorder(T.root));
-    printf("\nOrdenada em Pos-order?: %d", postorder(T.root));
+    printf("\nNumero de nos folhas: %d", num_leaves(T.root));
+
+    printf("\nA arvore esta cheia?: ");
+    print_result(is_full(T.root));
+
+    printf("\nA arvore e ABB?: ");
+    print_result(is_abb(T.root));
+
+    printf("\nA arvore e AVL?: ");
+    print_result(is_avl(T.root));
+
+    printf("\nOrdenada em Pre-order?: ");
+    print_result(preorder(T.root));
+
+    printf("\nOrdenada em ordem?: ");
+    print_result(inorder(T.root));
+
+    printf("\nOrdenada em Pos-order?: ");
+    print_result(postorder(T.root));
 
 
     create_avl(&tree_avl);
@@ -46,14 +60,26 @@ int main() {
     printf("\nArvore AVL: \n");
     print_avl(&tree_avl.root);
     printf("\nAltura da arvore: %d", height_avl(tree_avl.root));
-    printf("\nNumero de nós folhas: %d", num_leaves_avl(tree_avl.root));
-    printf("\n0 - Nao, 1 - Sim");
-    printf("\nA arvore esta cheia?: %d", is_full_avl(tree_avl.root));
-    printf("\nA arvore e ABB?: %d", is_abb_avl(tree_avl.root));
-    printf("\nA arvore e AVL?: %d", is_avl_avl(tree_avl.root));
-    printf("\nOrdenada em Pre-order?: %d", preorder_avl(tree_avl.root));
-    printf("\nOrdenada em Ordem?: %d", inorder_avl(tree_avl.root));
-    printf("\nOrdenada em Pos-order?: %d\n", postorder_avl(tree_avl.root));
+    printf("\nNumero de nos folhas: %d", num_leaves_avl(tree_avl.root));
+
+    printf("\nA arvore esta cheia?: ");
+    print_result(is_full_avl(tree_avl.root));
+
+    printf("\nA arvore e ABB?: ");
+    print_result(is_abb_avl(tree_avl.root));
+
+    printf("\nA arvore e AVL?: ");
+    print_result(is_avl_avl(tree_avl.root));
+
+    printf("\nOrdenada em Pre-order?: ");
+    print_result(preorder_avl(tree_avl.root));
+
+    printf("\nOrdenada em Ordem?: ");
+    print_result(inorder_avl(tree_avl.root));
+
+    printf("\nOrdenada em Pos-order?: ");
+    print_result(postorder_avl(tree_avl.root));
+    printf("\n");
 
 }
 
@@ -100,4 +126,11 @@ void create_tree_avl(char *str, avl *a) {
             insert_avl(&a->root, &str[i]);
         }
     }
+}
+
+void print_result(int resultado) {
+    if (resultado)
+        printf("Sim");
+    else
+        printf("Não");
 }
